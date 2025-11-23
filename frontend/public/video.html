@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CryptoStream - Videos XLM</title>
+<link rel="stylesheet" href="video.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stellar-sdk/11.2.2/stellar-sdk.min.js"></script>
+</head>
+<body>
+<div id="loginPage" class="login-page">...tu login UI...</div>
+<div id="dashboardPage" class="dashboard-page">...dashboard UI...</div>
+<div id="videoPage" class="video-page">...video UI...</div>
+<div class="notification" id="notification"></div>
+
+<script>
+const app = {
+    publicKey: null,
+    server: null,
+    backendUrl: 'http://localhost:3000', // tu backend corriendo
+    videos: [
+        {id:1,title:"Tutorial Stellar Blockchain",duration:300,reward:0.5,emoji:"🌟"},
+        {id:2,title:"Usando Freighter Wallet",duration:240,reward:0.3,emoji:"💼"},
+        {id:3,title:"Blockchain Explicada",duration:500,reward:0.8,emoji:"⛓️"}
+    ],
+
+    async connectFreighter(){
+        if(!window.freighterApi){ showNotification('⚠️ Instala Freighter','error'); return; }
+        try{
+            this.publicKey=await window.freighterApi.getPublicKey();
+            this.server=new StellarSdk.Server('https://horizon-testnet.stellar.org');
+            localStorage.setItem('stellarPublicKey',this.publicKey);
+            showNotification('✅ Conectado: '+this.publicKey,'success');
+            this.loadDashboard();
+        } catch(e){ showNotification('❌ '+e.message,'error'); }
+    },
+
+    async loadDashboard(){
+        document.getElementById('loginPage').style.display='none';
+        document.getElementById('dashboardPage').style.display='block';
+        const balance=await this.getBalance();
+        document.getElementById('balanceDisplay').textContent=`💰 ${balance} XLM`;
+        this.loadVideos();
+    },
+
+    async getBalance(){
+        try{
+            const account=await this.server.loadAccount(this.publicKey);
+            return parseFloat(account.balances.find(b=>b.asset_type==='native').balance).toFixed(2);
+        } catch(e){ return 0; }
+    },
+
+    loadVideos(){
+        const grid=document.getElementById('videosGrid');
+        grid.innerHTML='';
+        this.videos.forEach(v=>{
+            const div=document.createElement('div');
+            div.className='video-card';
+            div.innerHTML=`<div class="video-thumbnail">${v.emoji}</div>
+                           <div class="video-info"><div class="video-title">${v.title}</div>
+                           <div class="video-meta"><span>${v.duration} s</span> <span>${v.reward} XLM</span></div></div>`;
+            div.onclick=()=>this.watchVideo(v.id);
+            grid.appendChild(div);
+        });
+    },
+
+    watchVideo(id){
+        const video=this.videos.find(v=>v.id===id);
+        if(!video) return;
+        document.getElementById('dashboardPage').style.display='none';
+        document.getElementById('videoPage').style.display='block';
+        document.getElementById('videoTitle').textContent=video.title;
+        document.getElementById('videoReward').textContent=`⭐ Recompensa: ${video.reward} XLM`;
+
+        let time=0;
+        const interval=setInterval(()=>{
+            time++;
+            document.getElementById('timer').textContent=`${time}s / ${video.duration}s`;
+            const fill=Math.min(100,(time/video.duration)*100);
+            document.getElementById('progressFill').style.width=fill+'%';
+            if(time>=video.duration){
+                clearInterval(interval);
+                showNotification(`🎉 Ganaste ${video.reward} XLM!`,'success');
+                this.payReward(video.reward);
+            }
+        },1000);
+    },
+
+    async payReward(amount){
+        // Llamada a tu backend para registrar pago
+        try{
+            await fetch(this.backendUrl+'/pay',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({account:this.publicKey,amount})});
+            const balance=await this.getBalance();
+            document.getElementById('balanceDisplay').textContent=`💰 ${balance} XLM`;
+        } catch(e){ console.error(e); showNotification('❌ Error enviando recompensa','error'); }
+    },
+
+    goToDashboard(){
+        document.getElementById('videoPage').style.display='none';
+        document.getElementById('dashboardPage').style.display='block';
+    },
+
+    logout(){
+        localStorage.removeItem('stellarPublicKey');
+        document.getElementById('dashboardPage').style.display='none';
+        document.getElementById('loginPage').style.display='flex';
+    }
+};
+
+window.addEventListener('load', async ()=>{
+    const saved=localStorage.getItem('stellarPublicKey');
+    if(saved) app.publicKey=saved;
+    if(app.publicKey) await app.connectFreighter();
+});
+
+function showNotification(msg,type){
+    const n=document.getElementById('notification');
+    n.textContent=msg;
+    n.className='notification '+type;
+    n.style.display='block';
+    setTimeout(()=>n.style.display='none',5000);
+}
+</script>
+</body>
+</html>
