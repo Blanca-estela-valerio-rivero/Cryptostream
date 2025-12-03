@@ -1,7 +1,14 @@
-const API_URL = 'http://localhost:3000/api/videos'; // <-- tu endpoint real
+/**
+ * API Module para CryptoStream
+ * Utiliza Config.getApiBaseUrl() para manejar automáticamente dev vs producción
+ * 
+ * En desarrollo: http://localhost:3000/api
+ * En producción: /api (redirigido por netlify.toml a funciones serverless)
+ */
 
 export async function registerWallet(publicKey) {
-    return fetch(`${API_URL}/register-wallet`, {
+    const url = `${Config.getApiBaseUrl()}/register-wallet`;
+    return fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ publicKey })
@@ -9,11 +16,13 @@ export async function registerWallet(publicKey) {
 }
 
 export async function getVideos() {
-    return fetch(`${API_URL}/videos`).then(r => r.json());
+    const url = `${Config.getVideosUrl()}`;
+    return fetch(url).then(r => r.json());
 }
 
 export async function sendReward(videoId, publicKey) {
-    return fetch(`${API_URL}/reward`, {
+    const url = `${Config.getApiBaseUrl()}/reward`;
+    return fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ videoId, publicKey })

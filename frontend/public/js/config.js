@@ -13,14 +13,18 @@ const Config = {
 
     /**
      * Obtener URL base de la API
+     * 
+     * En desarrollo local: http://localhost:3000/api
+     * En producción (Netlify): /api (redirige a funciones serverless)
      */
     getApiBaseUrl() {
         // Si estamos en localhost, usar dev
         if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
             return 'http://localhost:3000/api';
         }
-        // En producción, usar prod (Railway)
-        return 'https://believable-playfulness-production.up.railway.app/api';
+        // En producción (Netlify), usar path relativo que redirige a la función
+        // Netlify maneja la redirección automáticamente vía netlify.toml
+        return '/api';
     },
 
     /**

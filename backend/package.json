@@ -1,9 +1,12 @@
 {
   "name": "cryptostream-backend",
   "version": "1.0.0",
+  "description": "Backend para CryptoStream - dApp de videos con Stellar",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "dev": "node index.js",
+    "build": "echo 'Backend is serverless on Netlify'"
   },
   "dependencies": {
     "axios": "^1.13.2",
@@ -14,6 +17,10 @@
     "form-data": "^4.0.5",
     "mongoose": "^9.0.0",
     "multer": "^2.0.2",
+    "serverless-http": "^3.2.0",
     "stellar-sdk": "^10.0.0"
+  },
+  "engines": {
+    "node": "18.17.0"
   }
 }

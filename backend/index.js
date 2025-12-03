@@ -143,8 +143,14 @@ app.use('/api/videos', videoRoutes);
 // Puerto
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
-    console.log(`🚀 Servidor corriendo en puerto ${PORT}`);
-    console.log(`📹 Endpoint de upload: http://localhost:${PORT}/api/upload`);
-    console.log(`🎬 API de videos: http://localhost:${PORT}/api/videos`);
-});
+// Solo escuchar si no estamos en modo serverless (Netlify/Vercel)
+if (require.main === module) {
+    app.listen(PORT, () => {
+        console.log(`🚀 Servidor corriendo en puerto ${PORT}`);
+        console.log(`📹 Endpoint de upload: http://localhost:${PORT}/api/upload`);
+        console.log(`🎬 API de videos: http://localhost:${PORT}/api/videos`);
+    });
+}
+
+// Exportar app para funciones serverless (Netlify)
+module.exports = app;

@@ -1,23 +1,69 @@
 # Netlify configuration for CryptoStream dApp
+# Configuración oficial para desplegar correctamente en Netlify
 
 [build]
-  # Directorio a publicar
+  # Directorio a publicar (frontend)
   publish = "frontend/public"
-  
-  # No hay comando de build porque es HTML/JS puro
-  command = "echo 'No build needed'"
+  # Comando de build: instalar dependencias del backend y copiar
+  command = "cd backend && npm install"
+  # Directorio de funciones serverless
+  functions = "functions"
+  # Node version
+  node_version = "18.17.0"
 
-# Configuración para SPA routing
+# Configuración de contexto para desarrollo
+[context.production]
+  environment = { REACT_APP_ENV = "production" }
+
+[context.deploy-preview]
+  environment = { REACT_APP_ENV = "staging" }
+
+# ===== CONFIGURACIÓN DE REDIRECCIONES =====
+
+# ⚠️ IMPORTANTE: La redirección /api debe estar ANTES de la redirección /* para SPA
+# Redirección para la API (Backend via funciones serverless)
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/api/:splat"
+  status = 200
+  force = true
+
+# Configuración para SPA routing (Frontend)
+# ESTA REGLA DEBE SER LA ÚLTIMA porque tiene patrón universal /*
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
+  force = false
 
-# Headers de seguridad
+# ===== HEADERS DE SEGURIDAD =====
 [[headers]]
   for = "/*"
   [headers.values]
+    # CORS - Permitir requests desde tu frontend
+    Access-Control-Allow-Origin = "*"
+    Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, OPTIONS"
+    Access-Control-Allow-Headers = "Content-Type, Authorization"
+    
+    # Seguridad
     X-Frame-Options = "DENY"
     X-Content-Type-Options = "nosniff"
     X-XSS-Protection = "1; mode=block"
     Referrer-Policy = "strict-origin-when-cross-origin"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://sdk.stellar.org; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:;"
+
+# ===== CUSTOM ERROR PAGES =====
+[[headers]]
+  for = "/index.html"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate"
+
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Cache-Control = "max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.css"
+  [headers.values]
+    Cache-Control = "max-age=31536000, immutable"
