@@ -1,111 +1,81 @@
-// backend/controllers/videosController.js
-const fs = require('fs');
-const path = require('path');
+const Video = require('../models/Video');
 
-const DB_PATH = path.join(__dirname, '../data/db.json');
-
-// Helper para leer DB
-const readDB = () => {
-    try {
-        if (!fs.existsSync(DB_PATH)) {
-            return { videos: [], rewards: {} };
-        }
-        const data = fs.readFileSync(DB_PATH, 'utf8');
-        return JSON.parse(data);
-    } catch (error) {
-        console.error('Error leyendo DB:', error);
-        return { videos: [], rewards: {} };
-    }
-};
-
-// Helper para escribir DB
-const writeDB = (data) => {
-    try {
-        fs.writeFileSync(DB_PATH, JSON.stringify(data, null, 2));
-    } catch (error) {
-        console.error('Error escribiendo DB:', error);
-    }
-};
-
+// Obtener todos los videos
 exports.getVideos = async (req, res) => {
-    const db = readDB();
-    res.json(db.videos);
+    try {
+        const videos = await Video.find().sort({ createdAt: -1 });
+        // Mapear para asegurar compatibilidad con el frontend (owner vs ownerPublicKey)
+        const formattedVideos = videos.map(v => ({
+            ...v.toObject(),
+            owner: v.ownerPublicKey // Frontend espera 'owner'
+        }));
+        res.json(formattedVideos);
+    } catch (error) {
+        console.error('Error getVideos:', error);
+        res.status(500).json({ error: 'Error al obtener videos' });
+    }
 };
 
+// Agregar un nuevo video
 exports.addVideo = async (req, res) => {
     try {
-        const {
-            title,
-            url,
-            category,
-            reward,
-            emoji,
-            isReel,
-            ownerPublicKey,
-            ipfsHash,
-            duration
-        } = req.body;
+        const { title, url, ipfsHash, category, reward, emoji, isReel, ownerPublicKey, duration } = req.body;
 
         if (!url || !ownerPublicKey) {
             return res.status(400).json({ error: 'Faltan datos requeridos' });
         }
 
-        const db = readDB();
+        // Generar ID numérico simple (timestamp) para compatibilidad
+        const newId = Date.now();
 
-        const newVideo = {
-            id: Date.now(), // ID único basado en timestamp
+        const newVideo = await Video.create({
+            id: newId,
             title: title || 'Sin título',
             url,
+            ipfsHash,
             category: category || 'General',
             reward: parseFloat(reward) || 0,
             emoji: emoji || '🎬',
             isReel: !!isReel,
-            owner: ownerPublicKey,
-            ipfsHash: ipfsHash || '',
-            duration: duration || 0,
-            createdAt: new Date().toISOString()
+            ownerPublicKey,
+            duration: duration || 0
+        });
+
+        console.log('✅ Nuevo video guardado en MongoDB:', newVideo.title);
+
+        // Devolver formato esperado por frontend
+        const responseVideo = {
+            ...newVideo.toObject(),
+            owner: newVideo.ownerPublicKey
         };
 
-        db.videos.push(newVideo);
-
-        // Recompensa por subir video (opcional)
-        // db.rewards[ownerPublicKey] = (db.rewards[ownerPublicKey] || 0) + 10;
-
-        writeDB(db);
-
-        console.log('✅ Nuevo video guardado:', newVideo.title);
-        res.json({ message: 'Video agregado exitosamente', video: newVideo });
-
+        res.status(201).json(responseVideo);
     } catch (error) {
-        console.error('Error en addVideo:', error);
-        res.status(500).json({ error: 'Error interno del servidor' });
+        console.error('Error al guardar video:', error);
+        res.status(500).json({ error: 'Error al guardar video en base de datos' });
     }
 };
 
+// Eliminar un video
 exports.deleteVideo = async (req, res) => {
     try {
-        const { id } = req.params;
-        const db = readDB();
+        const videoId = req.params.id;
+        const result = await Video.findOneAndDelete({ id: videoId });
 
-        const initialLength = db.videos.length;
-        db.videos = db.videos.filter(v => v.id.toString() !== id.toString());
-
-        if (db.videos.length === initialLength) {
+        if (!result) {
             return res.status(404).json({ error: 'Video no encontrado' });
         }
 
-        writeDB(db);
-        console.log(`🗑️ Video ${id} eliminado`);
-        res.json({ message: 'Video eliminado' });
-
+        console.log(`🗑️ Video ${videoId} eliminado de MongoDB`);
+        res.json({ success: true, message: 'Video eliminado' });
     } catch (error) {
-        console.error('Error en deleteVideo:', error);
+        console.error('Error deleteVideo:', error);
         res.status(500).json({ error: 'Error al eliminar video' });
     }
 };
 
+// Obtener recompensas (Placeholder para compatibilidad)
 exports.getRewards = async (req, res) => {
-    const { ownerPublicKey } = req.query;
-    const db = readDB();
-    res.json({ reward: db.rewards[ownerPublicKey] || 0 });
+    // Por ahora retornamos 0, se puede implementar modelo de Usuario/Rewards luego
+    res.json({ reward: 0 });
 };
