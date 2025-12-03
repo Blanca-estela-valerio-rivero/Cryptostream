@@ -9,11 +9,32 @@ const path = require('path');
 const fs = require('fs');
 const PinataService = require('./services/pinataService');
 
+const connectDB = require('./config/db');
+
 const app = express();
 
+// Conectar a MongoDB
+connectDB();
+
 // Middlewares
-app.use(cors());
+// Middlewares
+app.use(cors({
+    origin: '*', // Permitir todos los orígenes para evitar problemas de CORS en producción
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
 app.use(bodyParser.json());
+
+// Logging middleware
+app.use((req, res, next) => {
+    console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+    next();
+});
+
+// Health Check Endpoint
+app.get('/api/health', (req, res) => {
+    res.json({ status: 'ok', message: 'Server is running 🚀' });
+});
 
 // Configurar Pinata
 const pinataService = new PinataService(
