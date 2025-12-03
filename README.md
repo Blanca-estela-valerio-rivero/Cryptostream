@@ -2,6 +2,23 @@
 
 Una aplicación descentralizada (dApp) para compartir y monetizar videos usando la blockchain de Stellar.
 
+---
+
+## 🚀 DEPLOYMENT EN NETLIFY - LISTO PARA PRODUCCIÓN
+
+> ⚠️ **IMPORTANTE**: El proyecto está completamente configurado para Netlify.
+> 
+> **Lee esto primero**: `DEPLOYMENT_READY.txt`
+> 
+> **Guía rápida**: 
+> 1. Ve a https://app.netlify.com
+> 2. Sigue los 6 pasos en DEPLOYMENT_READY.txt
+> 3. ¡Tu app estará en vivo en 5-10 minutos!
+> 
+> **Credenciales Pinata**: Ya configuradas en .env (no subido a GitHub)
+
+---
+
 ## ✨ Características
 
 - 💰 **Pagos Reales en Stellar**: Transacciones verificables en Stellar Testnet
