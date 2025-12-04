@@ -1,0 +1,270 @@
+╔════════════════════════════════════════════════════════════════════════════╗
+║                                                                            ║
+║              🔴 DESPLIEGUE FALLIDO - DIAGNÓSTICO Y SOLUCIÓN               ║
+║                                                                            ║
+║                    Sitio: snazzy-twilight-868202                           ║
+║                                                                            ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+
+═══════════════════════════════════════════════════════════════════════════════
+🔍 DIAGNÓSTICO DEL PROBLEMA
+═══════════════════════════════════════════════════════════════════════════════
+
+Posibles causas del fallo:
+
+❌ 1. VARIABLES DE ENTORNO NO AGREGADAS
+   └─ Sin PINATA_API_KEY y PINATA_SECRET_KEY, la app falla
+
+❌ 2. PROBLEMAS CON MONGODB LOCAL
+   └─ En Netlify no hay acceso a mongodb://localhost:27017
+   └─ Solución: Usar MongoDB Atlas (mongodb+srv://...)
+
+❌ 3. FALTA CREAR LA CARPETA "functions" EN EL REPO
+   └─ functions/api.js debe estar en la raíz del repositorio
+
+❌ 4. COMANDOS DE BUILD INCORRECTOS
+   └─ El comando debe ser: cd backend && npm install
+
+❌ 5. PERMISOS O CONFIGURACIÓN DE GIT
+   └─ El repositorio debe permitir que Netlify lea los archivos
+
+
+═══════════════════════════════════════════════════════════════════════════════
+✅ PASOS PARA SOLUCIONAR
+═══════════════════════════════════════════════════════════════════════════════
+
+PASO 1: Verificar que functions/api.js existe en el repo
+─────────────────────────────────────────────────────────
+
+Tu estructura debe ser:
+
+CRYPTOSTREAM/
+├── backend/
+│   ├── index.js
+│   ├── package.json
+│   └── services/
+├── frontend/
+│   └── public/
+│       └── index.html
+├── functions/          ← ¡DEBE EXISTIR!
+│   └── api.js          ← ¡DEBE EXISTIR!
+├── netlify.toml
+└── .env
+
+
+PASO 2: Verificar que functions/api.js está configurado correctamente
+──────────────────────────────────────────────────────────────────────
+
+El archivo debe contener:
+
+```javascript
+const serverless = require('serverless-http');
+const app = require('../backend/index');
+
+const handler = serverless(app);
+module.exports = { handler };
+```
+
+
+PASO 3: Verificar netlify.toml
+───────────────────────────────
+
+Debe tener:
+
+[build]
+  publish = "frontend/public"
+  command = "cd backend && npm install"
+  functions = "functions"
+  node_version = "18.17.0"
+
+
+PASO 4: Agregar variables de entorno en Netlify Dashboard
+──────────────────────────────────────────────────────────
+
+1. Ve a: https://app.netlify.com
+2. Selecciona: snazzy-twilight-868202
+3. Settings → Build & deploy → Environment
+4. Click: "Edit variables"
+5. Agrega las 5 variables:
+
+   PINATA_API_KEY        = 25038791f137b293b9e8
+   PINATA_SECRET_KEY     = 25038791f137b293b9e8
+   MONGODB_URI           = mongodb://localhost:27017/cryptostream
+   STELLAR_NETWORK       = TESTNET
+   PORT                  = 3000
+
+6. Click: "Save"
+
+
+PASO 5: Hacer redeploy
+──────────────────────
+
+1. En Netlify Dashboard
+2. Ve a: Deploys
+3. Selecciona el último deploy
+4. Click: "Retry build"
+   O simplemente: haz un push a GitHub (rama Blanca)
+
+
+PASO 6: Verificar logs
+──────────────────────
+
+1. Dashboard → Deploys → Tu deploy
+2. Click: "View deploy log"
+3. Busca errores en rojo
+4. Si ves "Cannot find module 'serverless-http'"
+   → El npm install no funcionó correctamente
+
+
+═══════════════════════════════════════════════════════════════════════════════
+⚠️ PROBLEMA PROBABLE: MONGODB LOCAL
+═══════════════════════════════════════════════════════════════════════════════
+
+La URL mongodb://localhost:27017/cryptostream SOLO funciona en tu máquina local.
+
+En Netlify NO EXISTE "localhost" porque es un servidor diferente.
+
+SOLUCIÓN: Cambiar a MongoDB Atlas (gratis)
+
+1. Ve a: https://www.mongodb.com/cloud/atlas
+2. Crea cuenta (gratis)
+3. Crea cluster gratuito
+4. Obtén connection string: mongodb+srv://usuario:password@cluster.mongodb.net/cryptostream
+5. En Netlify Dashboard, actualiza MONGODB_URI con esa URL
+
+
+═══════════════════════════════════════════════════════════════════════════════
+🔧 ARCHIVO functions/api.js (DEBE EXISTIR)
+═══════════════════════════════════════════════════════════════════════════════
+
+Si NO EXISTE, créalo con este contenido:
+
+Archivo: c:\Users\Estela\Desktop\CRYPTOSTREAM\functions\api.js
+
+```javascript
+/**
+ * Netlify Serverless Function para CryptoStream
+ * 
+ * Esta función expone el backend Express como una función serverless en Netlify.
+ * La redirección de /api/* a /.netlify/functions/api/:splat se configura en netlify.toml
+ * 
+ * Importante: Asegúrate de que todas las variables de entorno estén configuradas en Netlify
+ */
+
+const serverless = require('serverless-http');
+const app = require('../backend/index');
+
+// Configuración de la función serverless
+const handler = serverless(app, {
+    // Request context
+    request: (request, event, context) => {
+        // Logging para debugging
+        console.log(`[Netlify Function] ${request.method} ${request.path}`);
+    },
+    // Response context
+    response: (response, event, context) => {
+        // Logging de respuestas
+        console.log(`[Netlify Function] Respuesta: ${response.statusCode}`);
+    }
+});
+
+module.exports = { handler };
+```
+
+
+═══════════════════════════════════════════════════════════════════════════════
+📝 CHECKLIST DE VERIFICACIÓN
+═══════════════════════════════════════════════════════════════════════════════
+
+Local:
+  [ ] functions/api.js existe
+  [ ] netlify.toml está correcto
+  [ ] backend/package.json tiene serverless-http
+  [ ] .env tiene todas las variables
+
+GitHub (Blanca):
+  [ ] functions/api.js está pusheado
+  [ ] netlify.toml está pusheado
+  [ ] backend/package.json está pusheado
+  [ ] .env NO está pusheado (.gitignore protege)
+
+Netlify Dashboard:
+  [ ] 5 variables de entorno agregadas
+  [ ] Build command: cd backend && npm install
+  [ ] Publish directory: frontend/public
+  [ ] Functions directory: functions
+  [ ] Node version: 18.17.0
+
+MongoDB:
+  [ ] Si usas local: solo funciona en desarrollo
+  [ ] Para Netlify: cambiar a MongoDB Atlas
+
+
+═══════════════════════════════════════════════════════════════════════════════
+🚀 PRÓXIMO PASO: HACER PUSH Y REDEPLOY
+═══════════════════════════════════════════════════════════════════════════════
+
+1. Asegúrate que todo está en GitHub (rama Blanca)
+2. Ve a Netlify Dashboard
+3. Settings → Build & deploy → Environment
+4. Agrega las 5 variables (si no las has agregado)
+5. Haz un push a GitHub o click "Retry build"
+6. Espera a que compile
+7. Revisa los logs si hay errores
+
+
+═══════════════════════════════════════════════════════════════════════════════
+❓ ERRORES COMUNES Y SOLUCIONES
+═══════════════════════════════════════════════════════════════════════════════
+
+ERROR: "Cannot find module 'serverless-http'"
+└─ Solución: npm install en backend debe haber agregado serverless-http
+└─ Verificar: backend/package.json tiene "serverless-http": "^3.2.0"
+
+ERROR: "Cannot find module '../backend/index'"
+└─ Solución: functions/api.js intenta importar backend/index.js
+└─ Verificar: Ruta correcta y que archivo existe
+
+ERROR: "PINATA_API_KEY is undefined"
+└─ Solución: No agregaste variables en Netlify Dashboard
+└─ Acción: Ve a Settings → Build & deploy → Environment → Agrega variables
+
+ERROR: "MongoDB connection failed"
+└─ Solución: mongodb://localhost:27017 no funciona en Netlify
+└─ Acción: Cambiar a MongoDB Atlas
+
+ERROR: "Cannot GET /api/videos"
+└─ Solución: Redirects en netlify.toml incorrectos
+└─ Verificar: /api/* debe venir ANTES de /*
+
+
+═══════════════════════════════════════════════════════════════════════════════
+📞 INFORMACIÓN DEL DEPLOY FALLIDO
+═══════════════════════════════════════════════════════════════════════════════
+
+Sitio: snazzy-twilight-868202
+Repositorio: Blanca-estela-valerio-rivero/Cryptostream
+Rama: Blanca
+Build command: cd backend && npm install
+Publish: frontend/public
+Functions: functions
+
+Variables configuradas: ❓ (revisar en Dashboard)
+
+
+═══════════════════════════════════════════════════════════════════════════════
+✅ UNA VEZ QUE FUNCIONE
+═══════════════════════════════════════════════════════════════════════════════
+
+Tu aplicación estará en:
+
+🌐 Frontend:     https://snazzy-twilight-868202.netlify.app
+📹 API Videos:   https://snazzy-twilight-868202.netlify.app/api/videos
+💊 Health:       https://snazzy-twilight-868202.netlify.app/api/health
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+Documento creado: 3 de diciembre de 2025
+Revisar logs en: https://app.netlify.com
