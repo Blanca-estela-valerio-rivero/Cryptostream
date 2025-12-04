@@ -1,0 +1,12 @@
+DEPLOY TRIGGER - 2025-12-03 18:54:48
+
+Sitio: snazzy-twilight-868202
+Repositorio: Blanca-estela-valerio-rivero/Cryptostream
+Rama: Blanca
+
+Variables a configurar:
+- PINATA_API_KEY
+- PINATA_SECRET_KEY
+- MONGODB_URI
+- STELLAR_NETWORK
+- PORT
