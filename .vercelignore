@@ -1,0 +1,21 @@
+node_modules
+.env
+.env.local
+.DS_Store
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Backend local files
+backend/data/
+backend/temp_uploads/
+backend/uploads/
+
+# Development files
+.vscode/
+.idea/
+
+# Git
+.git/
+.gitignore

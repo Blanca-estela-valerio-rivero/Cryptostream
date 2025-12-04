@@ -1,0 +1,38 @@
+{
+    "name": "cryptostream",
+    "version": "1.0.0",
+    "description": "CryptoStream - dApp de Videos con Stellar",
+    "main": "api/index.js",
+    "scripts": {
+        "start": "node backend/index.js",
+        "dev": "node backend/index.js",
+        "vercel-build": "echo 'Build completed for Vercel'"
+    },
+    "dependencies": {
+        "axios": "^1.13.2",
+        "body-parser": "^1.20.2",
+        "cors": "^2.8.5",
+        "dotenv": "^17.2.3",
+        "express": "^4.18.2",
+        "form-data": "^4.0.5",
+        "mongoose": "^9.0.0",
+        "multer": "^2.0.2",
+        "stellar-sdk": "^10.0.0"
+    },
+    "engines": {
+        "node": "18.x"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Blanca-estela-valerio-rivero/Cryptostream"
+    },
+    "keywords": [
+        "stellar",
+        "blockchain",
+        "dapp",
+        "videos",
+        "cryptostream"
+    ],
+    "author": "CryptoStream Team",
+    "license": "MIT"
+}
