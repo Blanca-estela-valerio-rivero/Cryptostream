@@ -1,126 +1,190 @@
-# CONTRATO DE COMPROMISO DEL PROYECTO “CryptoStream”
+# 📋 Contrato de CryptoStream
 
-## 1. Introducción
+## Acuerdo de Términos y Condiciones
 
-El presente documento establece el contrato de compromiso del equipo de desarrollo del proyecto **CryptoStream**, con el propósito de formalizar los acuerdos, responsabilidades y lineamientos que regirán la ejecución del proyecto.
+### 1. Definiciones
 
-Este contrato simboliza la aceptación y el compromiso conjunto de los integrantes del equipo para garantizar la correcta planificación, desarrollo e implementación del sistema, de acuerdo con los principios de responsabilidad, transparencia y colaboración profesional.
+- **Plataforma**: CryptoStream, aplicación descentralizada (dApp) para compartir videos
+- **Usuario**: Cualquier persona que se registra y utiliza CryptoStream
+- **Contenido**: Videos, metadatos, descripciones y otros materiales compartidos en la plataforma
+- **Transacciones**: Operaciones de pago realizadas mediante Stellar Blockchain
+
+### 2. Aceptación de Términos
+
+Al usar CryptoStream, el Usuario acepta todos los términos y condiciones establecidos en este contrato. Si no está de acuerdo con algún término, debe abstenerse de usar la plataforma.
+
+### 3. Descripción del Servicio
+
+CryptoStream permite a los Usuarios:
+
+- Registrarse con autenticación biométrica (Passkey)
+- Crear carteras de Stellar Testnet
+- Compartir contenido de video
+- Comprar acceso a contenido premium
+- Monetizar su contenido mediante pagos en criptomonedas
+
+### 4. Responsabilidades del Usuario
+
+#### 4.1 Seguridad de Credenciales
+
+- El Usuario es responsable de mantener la confidencialidad de su clave privada de Stellar
+- El Usuario no debe compartir su clave privada con terceros
+- CryptoStream no puede recuperar claves privadas perdidas
+
+#### 4.2 Contenido Legal
+
+- El Usuario garantiza que todo contenido que comparte es legal y de su propiedad
+- El Usuario no puede compartir:
+  - Contenido protegido por derechos de autor sin autorización
+  - Contenido ilegal, obsceno o que infrinja derechos de terceros
+  - Contenido que promueva violencia o discriminación
+
+#### 4.3 Cumplimiento de Leyes
+
+- El Usuario declara cumplir con todas las leyes aplicables en su jurisdicción
+- CryptoStream opera bajo la red Testnet de Stellar (fondos de prueba)
+- El Usuario entiende que es una plataforma experimental
+
+### 5. Términos de Propiedad Intelectual
+
+#### 5.1 Derechos del Usuario
+
+- El Usuario retiene todos los derechos sobre su contenido original
+- Al compartir contenido en CryptoStream, el Usuario otorga una licencia no exclusiva para ser mostrado en la plataforma
+
+#### 5.2 Derechos de CryptoStream
+
+- La plataforma y su código fuente están bajo licencia MIT
+- CryptoStream no reclama propiedad sobre contenido de Usuario
+
+### 6. Transacciones y Pagos
+
+#### 6.1 Fondos de Prueba
+
+- Las transacciones ocurren en Stellar Testnet
+- Los fondos utilizados son monedas de prueba sin valor real
+- Las transacciones son inmutables y verificables en blockchain
+
+#### 6.2 Pagos Directos
+
+- Los pagos van directamente del comprador al creador
+- CryptoStream no actúa como intermediario
+- No hay comisiones de la plataforma
+
+#### 6.3 Reversibilidad
+
+- Las transacciones en blockchain no pueden ser revertidas
+- El Usuario es responsable de verificar pagos antes de confirmar
+
+### 7. Limitaciones de Responsabilidad
+
+#### 7.1 "TAL CUAL"
+
+CryptoStream se proporciona "tal cual" sin garantías expresas o implícitas sobre:
+
+- Disponibilidad continua del servicio
+- Funcionamiento ininterrumpido
+- Seguridad completa de los datos
+
+#### 7.2 Exención de Responsabilidad
+
+CryptoStream NO es responsable por:
+
+- Pérdida de fondos
+- Claves privadas comprometidas
+- Transacciones no autorizadas
+- Indisponibilidad temporal del servicio
+- Errores de red o blockchain
+- Daños causados por uso indebido
+
+### 8. Privacidad y Datos
+
+#### 8.1 Información Recopilada
+
+- CryptoStream recopila:
+  - Dirección pública de Stellar
+  - Nombre de usuario
+  - Avatar/imagen de perfil
+  - Datos de Passkey encriptados
+
+#### 8.2 Encriptación
+
+- Las claves privadas se encriptan localmente en el navegador
+- CryptoStream no almacena claves privadas
+- Los datos no se comparten con terceros
+
+#### 8.3 Datos Públicos
+
+- La dirección pública de Stellar es visible en todas las transacciones
+- El Usuario comprende que blockchain es público e inmutable
+
+### 9. Terminación del Servicio
+
+#### 9.1 Causales de Terminación
+
+CryptoStream puede terminar acceso del Usuario por:
+
+- Violación de términos y condiciones
+- Actividad ilegal o fraudulenta
+- Abuso de la plataforma
+- Incumplimiento de leyes aplicables
+
+#### 9.2 Acceso a Fondos
+
+- Al terminar, el Usuario mantiene acceso a su cartera Stellar
+- El Usuario puede usar su clave privada en cualquier momento
+
+### 10. Cambios a los Términos
+
+CryptoStream se reserva el derecho de modificar estos términos en cualquier momento. Los cambios serán comunicados a través de la plataforma.
+
+### 11. Ley Aplicable
+
+Este contrato se rige por las leyes del país donde resida el Usuario y las regulaciones aplicables a blockchain y criptomonedas.
+
+### 12. Resolución de Disputas
+
+#### 12.1 Mediación
+
+Cualquier disputa será resuelta mediante:
+
+1. Negociación directa entre las partes
+2. Mediación si es necesario
+3. Arbitraje vinculante como último recurso
+
+#### 12.2 No Garantía de Reembolso
+
+Como plataforma descentralizada, no hay garantía de reembolso. Las transacciones son finales.
+
+### 13. Contacto
+
+Para preguntas sobre estos términos, contactar:
+
+- **Email**: [contacto@cryptostream.app]
+- **GitHub**: https://github.com/Blanca-estela-valerio-rivero/Cryptostream
+- **Issues**: Abrir un issue en el repositorio
+
+### 14. Firma Digital
+
+**Fecha de Entrada en Vigor**: 3 de diciembre de 2025
+
+**Versión**: 1.0
+
+**Estado**: Activo
 
 ---
 
-## 2. Misión del Proyecto
+## 📝 Consentimiento del Usuario
 
-El proyecto **CryptoStream** tiene como finalidad desarrollar una librería criptográfica basada en flujos (*streams*) para el cifrado y descifrado seguro de datos.
+Al registrarse en CryptoStream, el Usuario confirma que:
 
-La solución integrará transformaciones criptográficas, modos seguros como **GCM** u otros, y una API clara y modular para facilitar el uso dentro de aplicaciones externas.
-
-El desarrollo se llevará a cabo bajo una metodología ágil, con enfoque iterativo y entregas planificadas por etapas.
-
----
-
-## 3. Alcance del Proyecto
-
-El proyecto comprende el desarrollo de un **MVP (Mínimo Producto Viable)** que integre las siguientes funcionalidades:
-
-- Stream de cifrado y descifrado.  
-- Implementación de modos de cifrado seguro (GCM o equivalente).  
-- Sistema de bloques de datos en flujo.  
-- Pruebas unitarias para validar el cifrado, integridad y funcionamiento general.  
-- Documentación técnica formal del API.  
-- Ejemplos de uso para demostración práctica.
+✅ Ha leído este contrato completo  
+✅ Entiende los términos y condiciones  
+✅ Acepta usar la plataforma bajo estos términos  
+✅ Acepta la responsabilidad de su seguridad  
+✅ Entiende que es una plataforma experimental (Testnet)  
 
 ---
 
-## 4. Entregables Principales
-
-| Entregable | Descripción | Fecha estimada |
-|-----------|-------------|----------------|
-| Prototipo técnico | Estructura base del proyecto y módulos principales | Semana 2 |
-| Librería CryptoStream (Base) | Implementación de streams y bloques | Semana 3 |
-| Modo de cifrado seguro | Integración de GCM u otro modo seguro | Semana 5 |
-| Pruebas unitarias | Validación técnica mediante test | Semana 6 |
-| Documentación API | Manual técnico, guía de uso y ejemplos | Semana 7 |
-| Integración de ejemplo | Demostración funcional del uso de la librería | Semana 8 |
-| Pruebas finales y mejoras | Validación completa y refactor | Semana 9 |
-| **Entrega final (MVP completo)** | Versión funcional lista para uso | Semana 10 |
-
----
-
-## 5. Estructura de Roles y Responsabilidades
-
-| Rol | Integrante(s) | Responsabilidades |
-|------|--------------|------------------|
-| Desarrollador Criptográfico | Sandy | Diseño y programación de la lógica criptográfica |
-| Desarrollador API | Jorge | Diseño y estructuración de la API, conexión de módulos |
-| Control de Calidad (QA) | Blanca | Creación y ejecución de pruebas unitarias y funcionales |
-| Diseñador Técnico / Documentación | Blanca | Elaboración de documentación y manuales |
-| Scrum Master / Gestor del Proyecto | Sandy | Planificación, control de tiempos, seguimiento del equipo |
-
----
-
-## 6. Compromiso con los Plazos y la Calidad
-
-Cada integrante del equipo se compromete formalmente a:
-
-- Cumplir con las fechas establecidas en el plan de desarrollo.
-- Mantener una comunicación constante y efectiva con el equipo.
-- Participar activamente en las reuniones de seguimiento y revisión.
-- Asegurar que todas las entregas cumplan con los estándares de calidad técnica, funcional y documental definidos.
-- Realizar revisiones de código para garantizar buenas prácticas y seguridad.
-
-**Declaración de compromiso:**
-
-> “Los integrantes del equipo de desarrollo del proyecto CryptoStream nos comprometemos a cumplir con los plazos, responsabilidades y estándares de calidad establecidos en este contrato, asegurando la correcta ejecución y finalización del proyecto conforme a los objetivos definidos.”
-
----
-
-## 7. Aprobación y Consenso del Equipo
-
-La redacción de este contrato se realizó de manera colaborativa.  
-Cada integrante participó en la revisión de los términos, alcanzando un consenso pleno respecto a los compromisos, responsabilidades y entregables establecidos.
-
-Este documento refleja el acuerdo colectivo y la voluntad conjunta de trabajar bajo principios de profesionalismo y cooperación técnica.
-
----
-
-## 8. Procedimiento de Firma Digital
-
-### 8.1. Creación de Pull Request
-
-El documento será incorporado al repositorio del proyecto bajo el nombre **CONTRACT.md**.
-
-Posteriormente, un integrante del equipo generará una Pull Request con el siguiente mensaje:
-
-> “Pull Request correspondiente a la firma digital del contrato del equipo del proyecto CryptoStream.  
-Este registro representa la aprobación formal de los compromisos establecidos y la aceptación de las responsabilidades asignadas.”
-
-### 8.2. Aprobación del Equipo
-
-Cada miembro del equipo deberá revisar y aprobar la Pull Request mediante:
-
-- Un comentario explícito de conformidad, o  
-- La función **Approve** de GitHub.
-
-Esta acción constituirá la firma digital simbólica de cada integrante, quedando como evidencia verificable en el historial del repositorio.
-
----
-
-## 9. Registro de Firmas Digitales
-
-| Nombre | Rol | Acción en GitHub | Estado |
-|--------|------|------------------|--------|
-| Blanca Estela Valerio Rivero | Control de Calidad (QA) | Aprobación de Pull Request | Firmado |
-| Sandy Marissa Garcia Santiago | Desarrollador Criptográfico / Scrum Master | Comentario de conformidad | Firmado |
-| Jorge Luis Hernandez Matra | Desarrollador API | Aprobación | Firmado |
-
----
-
-## 10. Declaración Final
-
-Este contrato constituye un acuerdo formal y simbólico de compromiso entre los integrantes del proyecto **CryptoStream**.
-
-Su propósito es garantizar la responsabilidad, la coordinación y la integridad del trabajo colaborativo, promoviendo un entorno profesional basado en la confianza, la transparencia y la calidad técnica.
-
-> **“El éxito del proyecto será reflejo de nuestro compromiso colectivo.”**
-
----
+**CryptoStream © 2025**  
+*Compartir videos con blockchain de Stellar*
