@@ -1,0 +1,125 @@
+═══════════════════════════════════════════════════════════════
+  CONFIGURACIÓN PARA VERCEL - VALORES EXACTOS
+═══════════════════════════════════════════════════════════════
+
+┌─────────────────────────────────────────────────────────────┐
+│ PROJECT SETTINGS (en la página de import de Vercel)        │
+└─────────────────────────────────────────────────────────────┘
+
+  Project Name:         cryptostream
+  Framework Preset:     Other
+  Root Directory:       ./
+  Build Command:        (dejar vacío o por defecto)
+  Output Directory:     frontend/public
+  Install Command:      npm install
+
+
+┌─────────────────────────────────────────────────────────────┐
+│ ENVIRONMENT VARIABLES (3 variables obligatorias)           │
+└─────────────────────────────────────────────────────────────┘
+
+  IMPORTANTE: Copia los valores de tu archivo .env
+
+  Variable 1:
+  ┌───────────────────────────────────────────────────────────┐
+  │ Name:     MONGODB_URI                                     │
+  │ Value:    [COPIA DE TU ARCHIVO .env]                      │
+  │ Apply to: ☑ Production ☑ Preview ☑ Development           │
+  └───────────────────────────────────────────────────────────┘
+
+  Variable 2:
+  ┌───────────────────────────────────────────────────────────┐
+  │ Name:     PINATA_API_KEY                                  │
+  │ Value:    [COPIA DE TU ARCHIVO .env]                      │
+  │ Apply to: ☑ Production ☑ Preview ☑ Development           │
+  └───────────────────────────────────────────────────────────┘
+
+  Variable 3:
+  ┌───────────────────────────────────────────────────────────┐
+  │ Name:     PINATA_SECRET_KEY                               │
+  │ Value:    [COPIA DE TU ARCHIVO .env]                      │
+  │ Apply to: ☑ Production ☑ Preview ☑ Development           │
+  └───────────────────────────────────────────────────────────┘
+
+
+┌─────────────────────────────────────────────────────────────┐
+│ CÓMO ENCONTRAR TUS VALORES                                 │
+└─────────────────────────────────────────────────────────────┘
+
+  1. Abre el archivo: .env (en la raíz del proyecto)
+  
+  2. Busca estas líneas:
+  
+     MONGODB_URI=mongodb://...
+     PINATA_API_KEY=...
+     PINATA_SECRET_KEY=...
+  
+  3. Copia el valor que está DESPUÉS del signo =
+     (sin espacios ni comillas)
+
+
+┌─────────────────────────────────────────────────────────────┐
+│ EJEMPLO                                                     │
+└─────────────────────────────────────────────────────────────┘
+
+  Si tu archivo .env tiene esto:
+  
+    PINATA_API_KEY=abc123xyz789
+  
+  En Vercel debes poner:
+  
+    Name:  PINATA_API_KEY
+    Value: abc123xyz789
+
+
+┌─────────────────────────────────────────────────────────────┐
+│ ⚠️  MONGODB_URI - IMPORTANTE                               │
+└─────────────────────────────────────────────────────────────┘
+
+  Si tu .env tiene:
+    MONGODB_URI=mongodb://localhost:27017/cryptostream
+    
+  ⚠️  Esto NO funcionará en producción
+  
+  Necesitas MongoDB Atlas (gratis):
+  
+  1. Ve a: https://www.mongodb.com/cloud/atlas/register
+  2. Crea cuenta y cluster gratuito (M0)
+  3. Database Access → Create user
+  4. Network Access → Add IP: 0.0.0.0/0
+  5. Connect → Get connection string:
+  
+     mongodb+srv://usuario:password@cluster.mongodb.net/cryptostream
+  
+  6. Usa ESTA URI en Vercel (no la de localhost)
+
+
+┌─────────────────────────────────────────────────────────────┐
+│ REPOSITORIO GIT                                            │
+└─────────────────────────────────────────────────────────────┘
+
+  Cuando Vercel te pida el repositorio, selecciona:
+  
+    Blanca-estela-valerio-rivero/Cryptostream
+    
+  Branch: Blanca (se selecciona automáticamente)
+
+
+┌─────────────────────────────────────────────────────────────┐
+│ DESPUÉS DEL DEPLOY                                         │
+└─────────────────────────────────────────────────────────────┘
+
+  Vercel te dará una URL como:
+  
+    https://cryptostream-abc123.vercel.app
+  
+  Prueba estos endpoints:
+  
+    ✅ /api/health
+    ✅ /api/videos
+    ✅ / (página principal)
+
+
+═══════════════════════════════════════════════════════════════
+  LINK PARA EMPEZAR: https://vercel.com/new
+═══════════════════════════════════════════════════════════════
